@@ -22,3 +22,39 @@ alternatively
 pip install "dvc[all]"
 
 mkdir -p config src/utils   as we are using src/utils hence use parameter -p
+
+
+DVC -> DL -> TF 
+
+commands:- 
+''' bash
+
+1. Create a new environment
+
+conda create --prefix ./env python=3.7 -y
+
+2. Activate the environment
+
+source activate ./env or conda activate ./env
+
+3. initialize git and dvc
+
+git init
+
+dvc init
+
+4. Create some empty files -
+
+touch 
+touch setup.py dvc.yaml params.yaml
+mkdir -p config src/utils
+touch config/config.yaml
+touch config/secrets.yaml
+
+5. Commit on git repository 
+
+git add .
+
+git commit -m "initial setup for project done"
+
+git push origin main
