@@ -58,3 +58,7 @@ git add .
 git commit -m "initial setup for project done"
 
 git push origin main
+
+6. Create config file
+
+7. download data -> [source](https://drive.google.com/drive/folders/1tz4IOoJKdi999IRdqJY04VOifyllRzj1)
