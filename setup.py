@@ -17,13 +17,13 @@ setup(
     license="GNU",
     python_requires=">=3.7",
     install_requires=[
-        'dvc'
-        'tensorflow'
-        'matplotlib'
-        'numpy'
-        'pandas'
-        'tqdm'
-        'pyyaml'
-        'boto3' 
+        'dvc',
+        'tensorflow',
+        'matplotlib',
+        'numpy',
+        'pandas',
+        'tqdm',
+        'pyyaml',
+        'boto3' ,
     ]
 )

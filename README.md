@@ -62,3 +62,5 @@ git push origin main
 6. Create config file
 
 7. download data -> [source](https://drive.google.com/drive/folders/1tz4IOoJKdi999IRdqJY04VOifyllRzj1)
+
+8 pip install -e . make src as package by installing setup file

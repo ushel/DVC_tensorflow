@@ -6,3 +6,7 @@ pandas
 tqdm
 pyyaml
 boto3 ## <<< for aws
+
+
+# local setup installation
+-e .
