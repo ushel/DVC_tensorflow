@@ -64,3 +64,5 @@ git push origin main
 7. download data -> [source](https://drive.google.com/drive/folders/1tz4IOoJKdi999IRdqJY04VOifyllRzj1)
 
 8 pip install -e . make src as package by installing setup file
+
+if you forget to use f string will print {path_to_yaml}
