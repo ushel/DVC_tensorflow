@@ -66,3 +66,5 @@ git push origin main
 8 pip install -e . make src as package by installing setup file
 
 if you forget to use f string will print {path_to_yaml}
+
+run above steps 
