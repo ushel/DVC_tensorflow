@@ -1,11 +1,12 @@
 from src.utils.all_utils import read_yaml, create_directory
-from src.utils.models import get_VGG_16_model
+from src.utils.models import get_VGG_16_model,prepare_model
 import argparse 
 import pandas as pd  
 import os   
 import shutil
 from tqdm import tqdm  # print progress bar
 import logging
+import io 
 
 
 logging_str = "[%(asctime)s: %(levelname)s: %(module)s]: %(message)s"
@@ -28,15 +29,29 @@ def prepare_base_model(config_path,params_path):
     create_directory([base_model_dir_path])
     
     base_model_path = os.path.join(base_model_dir_path,base_model_name)
-    model  = prepare_model(
+  
+    model = get_VGG_16_model(input_shape=params["IMAGE_SIZE"], model_path = base_model_path)
+    full_model  = prepare_model(
                 model,
                 CLASSES=params["CLASSES"],
-                freeze_all=True,
-                freeze_till=None,
+                freeze_all=False,
+                freeze_till=1,
                 learning_rate=params["LEARNING_RATE"]
-                           )
+                )
+    update_base_model_path = os.path.join(
+        base_model_dir_path,
+        artifacts["UPDATED_BASE_MODEL_NAME"]
+    )
+    def _log_model_summary(model):
+        with io.StringIO() as stream:
+            model.summary(print_fn = lambda x: stream.write(f"{x}\n"))
+            summary_str = stream.getvalue()
+        return summary_str
+    logging.info(f"full model summary: \n{_log_model_summary(full_model)}")
     
-    model = get_VGG_16_model(input_shape=params["IMAGE_SIZE"], model_path = base_model_path)
+    # logging.info(f"{full_model.summary()}") # it printing in terminal and not in logs i want it in logs...we need to do some customization
+    full_model.save(update_base_model_path)
+    
     #transfer learning means we will only remove fully connected layers and will keep all the convolutional layers whihci is trained on imagenet dataset, also fully connected layers has 1000 classes we only required 2 classes.
     
     # 3. Prepare the callbacks tensorboard logs or checkpointing
@@ -44,10 +59,7 @@ def prepare_base_model(config_path,params_path):
     # 4. Training module(take data from get data section, prepare custom model and take all the call back ---> trained model (file required  - config.yaml, secrets.yaml, params.yaml, artifacts directory,dvc.yaml,loogs.yaml, setup.py))
     # artifacts folder --> model, callbacks binary 
     # logs --> General logs and tensorboard logs 
-    for source_download_dir, local_data_dir in tqdm(zip(source_download_dirs,local_data_dirs), total=2, desc ="list of folders",colour = "red"):
-        #create folder to copy the data
-        create_directory([local_data_dir])
-        copy_file(source_download_dir,local_data_dir)
+
         
         
 if __name__ == '__main__':
@@ -63,7 +75,7 @@ if __name__ == '__main__':
     try:
         # print_fn("test") # to check exception
         logging.info("\n>>>>>>>>>>>>>>>>stage two started")
-        prepare_base_model(config_path=parsed_args.config, params_path= parsed_args.params)
+        prepare_base_model(config_path=parsed_args.config, params_path=parsed_args.params)
         logging.info("stage two completed! base model is created>>>>>>>>>>>>>>>>>>>>")
         
     except Exception as e:

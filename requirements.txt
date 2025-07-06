@@ -6,7 +6,7 @@ pandas
 tqdm
 pyyaml
 boto3 ## <<< for aws
-
+joblib
 
 # local setup installation
 -e .
