@@ -68,3 +68,12 @@ git push origin main
 if you forget to use f string will print {path_to_yaml}
 
 run above steps 
+
+project --->
+# 1. Get data
+# 2. Use transfer learning
+# 3. Prepare the callbacks tensorboard logs or checkpointing
+# 4. Training module(take data from get data section, prepare custom model and take all the call back ---> trained model 
+# (file required  - config.yaml, secrets.yaml, params.yaml, artifacts directory,dvc.yaml,loogs.yaml, setup.py))
+# artifacts folder --> model, callbacks binary 
+# logs --> General logs and tensorboard logs 
