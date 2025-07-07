@@ -63,6 +63,7 @@ def prepare_base_model(config_path,params_path):
         
  from src.utils.all_utils import read_yaml, create_directory
 from src.utils.models import get_VGG_16_model,prepare_model
+from src.utils.callbacks import create_and_save_tensorboard_callback,create_and_save_checkpoint_callback
 import argparse 
 import pandas as pd  
 import os   
@@ -123,9 +124,24 @@ def prepare_base_model(config_path,params_path):
     # artifacts folder --> model, callbacks binary 
     # logs --> General logs and tensorboard logs 
 def prepare_callbacks(config_path, params_path):
-    pass
+    config = read_yaml(config_path)
+    parmas = read_yaml(params_path)
+    
+    artifacts = config["artifacts"]
+    artifacts_dir = config["ARTIFACTS_DIR"]
+    tensorboard_log_dir = os.pat.join(artifacts_dir, artifacts["TENSORBOARD_ROOT_LOG_DIR"])
         
-        
+    checkpoint_dir= os.path.join(artifacts_dir,artifacts["CHECKPOINT_DIR"])
+    callbacks_dir= os.path.join(artifacts_dir,artifacts["CALLBACKS_DIR"])
+    
+    create_directory([
+        tensorboard_log_dir,
+        checkpoint_dir,
+        callbacks_dir
+    ])
+    
+    create_and_save_tensorboard_callback(callbacks_dir, tensorboard_log_dir)
+    create_and_save_checkpoint_callback(callbacks_dir, checkpoint_dir)    
 if __name__ == '__main__':
     args = argparse.ArgumentParser()
     
