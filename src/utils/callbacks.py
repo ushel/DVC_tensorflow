@@ -11,8 +11,6 @@ from src.utils.all_utils import get_timestamp
 #     unique_name = f"{name}_at_{timestamp}"
 #     return unique_name
     
-    
-
 def create_and_save_tensorboard_callback(callbacks_dir, tensorboard_log_dir):
     unique_name = get_timestamp("tb_logs")
     
