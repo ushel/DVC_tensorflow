@@ -54,7 +54,7 @@ def train_model(config_path, params_path):
         callbacks = callbacks
     )
     logging.info("Training is done.")
-    trained_model_dir = os.path.join(artifacts_dir,artifacts["TRAINED_MODEL_DIR"])
+    trained_model_dir = os.path.join(artifacts_dir,artifacts['TRAINED_MODEL_DIR'])
     create_directory(trained_model_dir)
     
     model_file_path = get_unique_path_to_save_model(trained_model_dir)
