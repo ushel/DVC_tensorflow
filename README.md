@@ -88,3 +88,7 @@ For every epochs will try to store some extra information such as :-
     its actually a tensorboard callback.
 
     checkpointing callback -> snapshot of updated model. in between values of weights getting train. during cash will have past history of the model or restart the training.
+
+
+ git rm -r --cached 'filepath'
+ git commit -m "stop tracking filepath"
