@@ -37,11 +37,22 @@ def train_model(config_path, params_path):
     
     train_generator, valid_generator = train_valid_generator(
         data_dir = artifacts["DATA_DIR"],
-        IMAGE_SIZE = (params["IMAGE_SIZE"][::-1]),
+        IMAGE_SIZE = (params["IMAGE_SIZE"][:-1]),
         BATCH_SIZE = params["BATCH_SIZE"],
         do_data_augmentation=params["AUGMENTATION"]
     )
+    # training
+    steps_per_epoch = train_generator.samples // train_generator.batch_size
+    validation_steps = valid_generator.samples // valid_generator.batch_size
     
+    model.fit(
+        train_generator,
+        validation_data = valid_generator,
+        epochs = params["EPOCHS"],
+        steps_per_epoch = steps_per_epoch,
+        validation_steps = validation_steps,
+        callbacks = callbacks
+    )
 if __name__ == '__main__':
     args = argparse.ArgumentParser()
     
