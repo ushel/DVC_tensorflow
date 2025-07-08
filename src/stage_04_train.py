@@ -9,7 +9,7 @@ import os
 import shutil
 from tqdm import tqdm  # print progress bar
 import logging
-
+from src.utils.models import get_unique_path_to_save_model
 
 logging_str = "[%(asctime)s: %(levelname)s: %(module)s]: %(message)s"
 log_dir = "logs"
@@ -53,6 +53,14 @@ def train_model(config_path, params_path):
         validation_steps = validation_steps,
         callbacks = callbacks
     )
+    logging.info("Training is done.")
+    trained_model_dir = os.path.join(artifacts_dir,artifacts["TRAINED_MODEL_DIR"])
+    create_directory(trained_model_dir)
+    
+    model_file_path = get_unique_path_to_save_model(trained_model_dir)
+    model.save(model_file_path)
+    
+    logging.info("Trained model is saved at {model_file_path}")
 if __name__ == '__main__':
     args = argparse.ArgumentParser()
     

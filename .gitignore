@@ -213,3 +213,4 @@ env
 
 # ignore the secrets file
 config\secrets.yaml
+artifacts
